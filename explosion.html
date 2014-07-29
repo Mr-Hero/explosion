@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style type="text/css">
+html,body{
+	width: 100%;
+	height:100%;
+}
+</style>
+</head>
+<body>
+</body>
+<script type="text/javascript" src="explosion.js"></script>
+<script type="text/javascript">
+var counter = 0;
+var container = document.body;
+var burstSound;
+var emitter = new Emitter(container);
+function randomrange(min, max){
+	return (Math.random()*(max-min)) + min;
+}
+
+function ClickEvnet(event){
+	playBurst();
+	emitter.makeExplosion(event.screenX, event.screenY,randomrange(-250,250));
+}
+
+function initSounds() {
+	burstSound = new Audio("sounds/burstsml2.mp3");	
+	burstSound.load();
+	burstSound.volume = 0; 
+	burstSound.play(); 
+}
+
+function playBurst() { 
+	burstSound.volume = 1; 
+	burstSound.play(); 
+}
+
+function gameLoop(){
+	emitter.update();
+}
+
+function init(){
+	setInterval(gameLoop,1000/60);
+	initSounds();
+	document.addEventListener("click", ClickEvnet, true);
+}
+
+window.addEventListener("load", init); 
+
+</script>
+</html>
